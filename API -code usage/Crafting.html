@@ -1,0 +1,39 @@
+<html><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><style>.note{padding:5px;margin-left:20px;background-color:#f9a384;border-radius:5px;} .function{padding:5px;border-radius:5px;background-color:#a6ff7a;margin-left:20px;}</style></head><body><div class="container"><h1>Crafting.cs</h1><h4>API</h4><hr><p class="h3" style="font-style: italic;">Class Description</p><pre style="padding-left:50px;">
+author: Elm
+
+description - Crafting Class
+
+usage: 
+  
+  if(!isObject($class::crafting))
+  {
+  <span style="padding-left:20px;">error("crafting_handle.cs -> Crafting class has not been executed, aborting.");</span>
+  }
+  else
+  {
+  <span style="padding-left:20px;">%crafting = $class::crafting;</span>
+
+  <span style="padding-left:20px;">%recipe = %crafting.newRecipe("handle");</span>
+  <span style="padding-left:20px;">%recipe.addItem("Wood",5);</span>
+  <span style="padding-left:20px;">%recipe.onComplete("handle",1);</span>
+  }
+
+<br></pre><div class="container"><h3>Method 1</h3><p class="function"><b>crafting::newRecipe(%this,%name)</b></p><p class="note">Notes: attempts to create a new recipe object
+</p></div><hr><div class="container"><h3>Method 2</h3><p class="function"><b>crafting::hasRecipe(%this,%name)</b></p><p class="note">Notes: checks the crafting class to see if
+%name string is already defined in the crafting class
+</p></div><hr><div class="container"><h3>Method 3</h3><p class="function"><b>crafting::getRecipe(%this,%name)</b></p><p class="note">Notes: attempts to get a recipe object by name
+</p></div><hr><div class="container"><h3>Method 4</h3><p class="function"><b>recipe::addItem(%this,%name,%amount)</b></p><p class="note">Notes: attempts to add a new item into the recipe
+class. Item in this case would be one or many requirements to
+successfully craft the recipe.
+</p></div><hr><div class="container"><h3>Method 5</h3><p class="function"><b>recipe::hasItem(%this,%name)</b></p><p class="note">Notes: checks to see if an item already
+exists in the recipe class
+</p></div><hr><div class="container"><h3>Method 6</h3><p class="function"><b>recipe::setRequirementLevel(%this,%level)</b></p><p class="note">Notes: set the recipe's required crafting level
+</p></div><hr><div class="container"><h3>Method 7</h3><p class="function"><b>recipe::getRequirementLevel(%this)</b></p><p class="note">Notes: get's the required crafting level to craft this recipe
+</p></div><hr><div class="container"><h3>Method 8</h3><p class="function"><b>recipe::onComplete(%this,%itemName,%amount)</b></p><p class="note">Notes: called when a recipe is completed to
+get the end-items the user crafted
+</p></div><hr><div class="container"><h3>Method 9</h3><p class="function"><b>recipe::clientVerified(%this,%cl)</b></p><p class="note">Notes: verifies that the client
+has everything required to craft a recipe
+</p></div><hr><div class="container"><h3>Method 10</h3><p class="function"><b>gameConnection::canCraft(%this,%nameOrObj)</b></p><p class="note">Notes: Checks to see if a client can craft
+a recipe by name or by obj is supported in this </p></div><hr><div class="container"><h3>Method 11</h3><p class="function"><b>gameConnection::craftingStart(%this,%recipe)</b></p><p class="note">Notes: attempts to craft a recipe
+</p></div><hr><div class="container"><h3>Method 12</h3><p class="function"><b>gameConnection::craftingFinish(%this,%recipe)</b></p><p class="note">Notes: cleanup give items, remove items, etc
+</p></div><hr></div></body></html>

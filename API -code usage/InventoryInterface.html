@@ -1,0 +1,17 @@
+<html><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><style>.note{padding:5px;margin-left:20px;background-color:#f9a384;border-radius:5px;} .function{padding:5px;border-radius:5px;background-color:#a6ff7a;margin-left:20px;}</style></head><body><div class="container"><h1>InventoryInterface.cs</h1><h4>API</h4><hr><p class="h3" style="font-style: italic;">Class Description</p><pre style="padding-left:50px;">
+author: Elm
+
+description - InventoryInterface Class
+This is the interface (centerprint)
+used to work with and display inventory item
+
+<br></pre><div class="container"><h3>Method 1</h3><p class="function"><b>InventoryInterface::display(%this,%inventoryObject,%index)</b></p><p class="note">Notes: Displays the inventory to the client.
+Allows for cycling, notice: %index
+</p></div><hr><div class="container"><h3>Method 2</h3><p class="function"><b>InventoryInterface::hide(%this,%inventoryObject)</b></p><p class="note">Notes: Removes the interface from the client's screen 
+</p></div><hr><div class="container"><h3>Method 3</h3><p class="function"><b>InventoryInterface::scrollDown(%this,%inventoryObject)</b></p><p class="note">Notes: scrolls down the inventory interface's list
+</p></div><hr><div class="container"><h3>Method 4</h3><p class="function"><b>InventoryInterface::scrollUp(%this,%inventoryObject)</b></p><p class="note">Notes: scrolls up the inventory interface's list
+</p></div><hr><div class="container"><h3>Method 5</h3><p class="function"><b>servercmdsupershiftbrick(%client,%x,%y,%z)</b></p><p class="note">Notes: <b>Packaged</b> Support for scrolling in the interface
+	</p></div><hr><div class="container"><h3>Method 6</h3><p class="function"><b>servercmdshiftbrick(%client,%x,%y,%z)</b></p><p class="note">Notes: <b>Packaged</b> Support for scrolling in the interface	
+	</p></div><hr><div class="container"><h3>Method 7</h3><p class="function"><b>serverCmdPlantBrick(%client,%a,%b,%c,%d)</b></p><p class="note">Notes: <b>Packaged</b> Support for selecting an item, using the interface	
+	</p></div><hr><div class="container"><h3>Method 8</h3><p class="function"><b>serverCmdCancelBrick(%this,%a,%b,%c,%d,%e)</b></p><p class="note">Notes: <b>Packaged</b> Support for closing the interface	
+	</p></div><hr></div></body></html>

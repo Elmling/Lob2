@@ -1,0 +1,41 @@
+<html><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><style>.note{padding:5px;margin-left:20px;background-color:#f9a384;border-radius:5px;} .function{padding:5px;border-radius:5px;background-color:#a6ff7a;margin-left:20px;}</style></head><body><div class="container"><h1>Menu.cs</h1><h4>API</h4><hr><p class="h3" style="font-style: italic;">Class Description</p><pre style="padding-left:50px;">
+author: Elm
+
+description - Menu Class
+This class is used to present a user with an interface
+they can interact with, without installing client sided files.
+This class utilizes the centerprint to achieve this.
+All menus should be created in /Menus/menu_menuName.cs
+
+classes: menuSystem & menuObject
+
+<br></pre><div class="container"><h3>Method 1</h3><p class="function"><b>menuSystem::newMenuObject(%this,%name,%bodyTxt)</b></p><p class="note">Notes: creates a new menu.
+</p></div><hr><div class="container"><h3>Method 2</h3><p class="function"><b>menuSystem::getMenu(%this,%name)</b></p><p class="note">Notes: attempts to get an existing menu from
+the menuSystem group
+</p></div><hr><div class="container"><h3>Method 3</h3><p class="function"><b>menuObject::getSelected(%this,%client)</b></p><p class="note">Notes: gets the current selection in the menu
+</p></div><hr><div class="container"><h3>Method 4</h3><p class="function"><b>menuObject::getMenuItemByText(%this,%text)</b></p><p class="note">Notes: returns the actual menu item object by it's text value
+</p></div><hr><div class="container"><h3>Method 5</h3><p class="function"><b>menuObject::onMenuSelect(%this,%client)</b></p><p class="note">Notes: called when a user selects a menu item
+</p></div><hr><div class="container"><h3>Method 6</h3><p class="function"><b>menuObject::onMenuSelectCallBack(%this,%client,%selected)</b></p><p class="note">Notes: empty callback </p></div><hr><div class="container"><h3>Method 7</h3><p class="function"><b>menuObject::scrollDown(%this,%client)</b></p><p class="note">Notes: scrolls down the interface list
+</p></div><hr><div class="container"><h3>Method 8</h3><p class="function"><b>menuObject::scrollUp(%this,%client)</b></p><p class="note">Notes: scrolls up the interface list
+</p></div><hr><div class="container"><h3>Method 9</h3><p class="function"><b>menuObject::setTempBody(%this,%body)</b></p><p class="note">Notes: all menuObjects have static body text
+defined in the /Menus/menu_menuName.cs file
+This method allows you to change that text
+</p></div><hr><div class="container"><h3>Method 10</h3><p class="function"><b>menuObject::setDefaultBody(%this)</b></p><p class="note">Notes: sets the body text of the menu interface back to
+whatever it was initially set to when created in
+the /Menus/menu_menuName.cs file
+</p></div><hr><div class="container"><h3>Method 11</h3><p class="function"><b>menuObject::showInputMenu(%this,%client)</b></p><p class="note">Notes: if the object is an input menu, it will be displayed
+</p></div><hr><div class="container"><h3>Method 12</h3><p class="function"><b>menuObject::hideInputMenu(%this,%client)</b></p><p class="note">Notes: hides a currently displayed input menu
+</p></div><hr><div class="container"><h3>Method 13</h3><p class="function"><b>menuObject::onInputValueRecieved(%this,%client,%value)</b></p><p class="note">Notes: callback for when a user gives the server input, from the input menu
+</p></div><hr><div class="container"><h3>Method 14</h3><p class="function"><b>menuObject::showMenu(%this,%client,%indexHighlight)</b></p><p class="note">Notes: attempts to show a menu
+</p></div><hr><div class="container"><h3>Method 15</h3><p class="function"><b>menuObject::hideMenu(%this,%client)</b></p><p class="note">Notes: attempts to hide a menu, if visible
+</p></div><hr><div class="container"><h3>Method 16</h3><p class="function"><b>menuObject::addMenuItem(%this,%text,%evalText)</b></p><p class="note">Notes: adds an item into the menu that is selectable and scrollable
+</p></div><hr><div class="container"><h3>Method 17</h3><p class="function"><b>menuObject::isMenu(%this,%name)</b></p><p class="note">Notes: simple menu check
+</p></div><hr><div class="container"><h3>Method 18</h3><p class="function"><b>menuObject::getMenu(%this,%name)</b></p><p class="note">Notes: attempts to return a menu object, by name
+</p></div><hr><div class="container"><h3>Method 19</h3><p class="function"><b>serverCmdMessageSent(%client,%message)</b></p><p class="note">Notes: <b>Packaged</b> overwrite - input menu support
+	</p></div><hr><div class="container"><h3>Method 20</h3><p class="function"><b>menuObject::onInputValueRecieved(%this,%client,%value)</b></p><p class="note">Notes: <b>Packaged</b> Example on displaying menus based on
+	certain things being clicked by a user
+	</p></div><hr><div class="container"><h3>Method 21</h3><p class="function"><b>servercmdsupershiftbrick(%client,%x,%y,%z)</b></p><p class="note">Notes: menu support for scrolling
+	</p></div><hr><div class="container"><h3>Method 22</h3><p class="function"><b>servercmdshiftbrick(%client,%x,%y,%z)</b></p><p class="note">Notes: menu support for scrolling
+	</p></div><hr><div class="container"><h3>Method 23</h3><p class="function"><b>serverCmdPlantBrick(%client,%a,%b,%c,%d)</b></p><p class="note">Notes: menu support for selecting an item, in a menu	
+	</p></div><hr><div class="container"><h3>Method 24</h3><p class="function"><b>serverCmdCancelBrick(%this,%a,%b,%c,%d,%e)</b></p><p class="note">Notes: support for closing a menu, if visible
+	</p></div><hr></div></body></html>

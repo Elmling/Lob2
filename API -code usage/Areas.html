@@ -1,0 +1,37 @@
+<html><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><style>.note{padding:5px;margin-left:20px;background-color:#f9a384;border-radius:5px;} .function{padding:5px;border-radius:5px;background-color:#a6ff7a;margin-left:20px;}</style></head><body><div class="container"><h1>Areas.cs</h1><h4>API</h4><hr><p class="h3" style="font-style: italic;">Class Description</p><pre style="padding-left:50px;">
+author: Elm
+
+description - Areas Class
+A class to define areas and provide
+extra functionality such as
+requirements for entering areas,
+call backs to package and a few
+other aspects.
+
+<br></pre><div class="container"><h3>Method 1</h3><p class="function"><b>Areas::getArea(%this,%name)</b></p><p class="note">Notes: Returns an area object
+</p></div><hr><div class="container"><h3>Method 2</h3><p class="function"><b>Areas::newArea(%this,%name,%vectorX,%vectorY)</b></p><p class="note">Notes: Defines a new area -> object
+%vectorx and %vectory should create a box
+</p></div><hr><div class="container"><h3>Method 3</h3><p class="function"><b>Areas::newArea_dupe(%this,%name,%selection)</b></p><p class="note">Notes: utilize the duplicators selection box to easily make
+a new Area.
+</p></div><hr><div class="container"><h3>Method 4</h3><p class="function"><b>Areas::registerBots(%this)</b></p><p class="note">Notes: Spawns all bots in all Areas
+</p></div><hr><div class="container"><h3>Method 5</h3><p class="function"><b>area::onRemove(%this)</b></p><p class="note">Notes: Cleanup triggers and other objects
+</p></div><hr><div class="container"><h3>Method 6</h3><p class="function"><b>area::onEnter(%this,%client)</b></p><p class="note">Notes: Called when a player enters an Area
+</p></div><hr><div class="container"><h3>Method 7</h3><p class="function"><b>area::onLeave(%this,%client)</b></p><p class="note">Notes: Called when a player leaves an Area
+</p></div><hr><div class="container"><h3>Method 8</h3><p class="function"><b>area::getPlayerCount(%this)</b></p><p class="note">Notes: Returns the amount of players in an Area
+</p></div><hr><div class="container"><h3>Method 9</h3><p class="function"><b>area::newRequirement(%this,%clientAttribute,%equalizer)</b></p><p class="note">Notes: Defines a new requirement for entering an Area
+Example Syntax:
+area.newRequirement["isAdmin","==true;"]; <- use parentheses
+</p></div><hr><div class="container"><h3>Method 10</h3><p class="function"><b>area::hasRequirement(%this,%clientAttribute,%equalizer)</b></p><p class="note">Notes: Checks if an Area has a requirement already
+</p></div><hr><div class="container"><h3>Method 11</h3><p class="function"><b>area::meetsRequirements(%this,%client)</b></p><p class="note">Notes: Checks if a client meets all requirements in Area
+</p></div><hr><div class="container"><h3>Method 12</h3><p class="function"><b>area::getRequirementCount(%this)</b></p><p class="note">Notes: Returns amount of requirements in an Area
+</p></div><hr><div class="container"><h3>Method 13</h3><p class="function"><b>to set AreaA to have players respawn in AreaB, for example:
+%area.setRespawnArea[%area2.name]; <- use parentheses
+function area::setRespawnArea(%this,%name)</b></p><p class="note">Notes: By default, this is set to itself, so players that die in AreaA
+Will respawn in AreaA
+You can use this </p></div><hr><div class="container"><h3>Method 14</h3><p class="function"><b>nPoint
+description: Returns a valid spawn point (vector)</b></p><p class="note">Notes: Returns a valid spawn point (vector</p></div><hr><div class="container"><h3>Method 15</h3><p class="function"><b>area::vectorInArea(%this,%vector)</b></p><p class="note">Notes: Checks if a point is inside of another a 3d box
+</p></div><hr><div class="container"><h3>Method 16</h3><p class="function"><b>requirement::meetsRequirement(%this,%client)</b></p><p class="note">Notes: Checks if a client meets the requirement at hand
+</p></div><hr><div class="container"><h3>Method 17</h3><p class="function"><b>but is named getBoxCenter()</b></p><p class="note">Notes: This is a default </p></div><hr><div class="container"><h3>Method 18</h3><p class="function"><b>area::createWorldTrigger(%this)</b></p><p class="note">Notes: Creates a trigger using an Area's vectorx and vectory to form the box
+</p></div><hr><div class="container"><h3>Method 19</h3><p class="function"><b>area_trigger::onEnterTrigger(%this,%trigger,%obj)</b></p><p class="note">Notes: Callbacks
+</p></div><hr><div class="container"><h3>Method 20</h3><p class="function"><b>area_trigger::onLeaveTrigger(%this,%trigger,%obj)</b></p><p class="note">Notes: Callbacks
+</p></div><hr></div></body></html>

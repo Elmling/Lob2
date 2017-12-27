@@ -1,0 +1,26 @@
+<html><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><style>.note{padding:5px;margin-left:20px;background-color:#f9a384;border-radius:5px;} .function{padding:5px;border-radius:5px;background-color:#a6ff7a;margin-left:20px;}</style></head><body><div class="container"><h1>Avatars.cs</h1><h4>API</h4><hr><p class="h3" style="font-style: italic;">Class Description</p><pre style="padding-left:50px;">
+author: Elm
+
+description - Avatars Class
+requires: <b>https:github.com/Elmling/Avatar_API<b>
+Allows for users to define simple avatars
+to be used with the Avatar API to present
+and easy to use avatar system - instead
+of trying to work with the default system.
+
+<br></pre><div class="container"><h3>Method 1</h3><p class="function"><b>avatars::update(%this)</b></p><p class="note">Notes: Updates all avatars to be current in the system
+</p></div><hr><div class="container"><h3>Method 2</h3><p class="function"><b>avatars::displayBegin(%this,%client)</b></p><p class="note">Notes: using the avatar class
+we start to display the avatars to a client
+allowing them to cycle through available
+avatars, allowing them to choose
+Uses <b>Menu.cs</b>
+</p></div><hr><div class="container"><h3>Method 3</h3><p class="function"><b>avatars::displayEnd(%this,%client)</b></p><p class="note">Notes: stops displaying the avatar menu
+and the cycling
+</p></div><hr><div class="container"><h3>Method 4</h3><p class="function"><b>avatars::displayNext(%this,%client)</b></p><p class="note">Notes: displays the next available avatar to
+the client
+</p></div><hr><div class="container"><h3>Method 5</h3><p class="function"><b>avatars::displayPrevious(%this,%client)</b></p><p class="note">Notes: displays the previous available avatar to the client
+</p></div><hr><div class="container"><h3>Method 6</h3><p class="function"><b>avatars::setAvatar(%this,%client,%avatar)</b></p><p class="note">Notes: vatar api defines a client attribute so we dont need to do anything.
+Ex: %client.customAvatar => current avatar 
+</p></div><hr><div class="container"><h3>Method 7</h3><p class="function"><b>avatars::getAvatarAPIName(%this,%name)</b></p><p class="note">Notes: support for AvatarAPI
+</p></div><hr><div class="container"><h3>Method 8</h3><p class="function"><b>GameConnection::onDeath(%this, %sourcePlayer, %sourceClient, %damageType, %damageArea)</b></p><p class="note">Notes: <b>Packaged</b> - support for smmdeadbodies when using AvatarAPI
+	</p></div><hr></div></body></html>
