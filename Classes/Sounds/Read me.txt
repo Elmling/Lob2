@@ -1,0 +1,5 @@
+All music that will be looped should be placed here and in add-ons/music/ folder.
+
+Sounds/music that will not be looped, can just be placed in this directory only.
+
+music_* files are also located in add-ons/music/ folder...

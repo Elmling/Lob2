@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+	<title>Quest Designer</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <script language="JavaScript" type="text/javascript">
+  <!--
+  		var code = {value:"//------ Quest Package & Setup START ------\n\npackage packageName {function packageName_Empty(){}\n};activatePackage(packageName);if(isObject($quest = Quests.getQuest(\"yourQuest\"))\n$quest.delete();$quest::yourQuest = Quests.newQuest(\"yourQuest\");//------ Quest Package & Setup END ------\n\n"};
+      var storyLine = [];
+      storyLine.id = 0;
+      
+      str = JSON.stringify(code);
+      strr = JSON.stringify(code, null, 4);
+      
+     	window.onload = function(e) 
+      {
+     	 	code_setHead();
+      };
+            
+     function code_setHead()
+     {
+             		document.getElementById("code").innerHTML="<p class=\"container-fluid\" style=\"text-align:center;\"><strong>Generated Code</strong></p><hr>";
+                document.getElementById("code").innerHTML+="<p>" + formatcode(code.value) + "</p> <hr>";  
+                code.head = code.value;  
+     }
+     
+     function parseInputBoxes()
+     {
+     		var ca = document.getElementById("clientAttribute").value;
+        var operator = document.getElementById("operator").value;
+        var value = document.getElementById("value").value;
+        var menuOnTrue = document.getElementById("menuOnTrue").value;
+        var menuOnFalse = document.getElementById("menuOnFalse").value;
+        
+        var finalStr = "$quest::yourQuest.addStep(\"" + ca + "\",\"" + operator + value + "\",\"" + menuOnTrue + "\",\"" + menuOnFalse + "\");";
+        code_addBody(finalStr)
+        clearInputBoxes()
+     }
+     
+     function clearInputBoxes()
+     {
+     		var ca = document.getElementById("clientAttribute").value="";
+        var operator = document.getElementById("operator").value="";
+        var value = document.getElementById("value").value="";
+        var menuOnTrue = document.getElementById("menuOnTrue").value="";
+        var menuOnFalse = document.getElementById("menuOnFalse").value="";
+        
+     }
+     
+     function code_addBody(str)
+     {
+     		code.value+=str;
+        var format = formatcode(str);
+     		document.getElementById("code").innerHTML+="\n<pre>" + str + "<div class=\"well container-fluid\" style=\"display:inline;float:right;margin:0px;padding:0px;position:absolute;right:10%;width:28px;height:18px;background-color:#7ee84a;text-align:center;\"><span class=\"glyphicon glyphicon-menu-hamburger\" onClick=\"doInputBox()\" aria-hidden=\"true\" data-toggle=\"tooltip\" style=\"margin:0px;position:absolute;padding:0px;right:25%;\" title=\"Add a description to the storyline of this step for your quest.\"></span></pre></div>";
+				var div = document.getElementById("code");
+        div.scrollTop = 1000;
+
+     }
+     
+     function copyCode()
+     {
+     		window.prompt("Copy to clipboard: Ctrl+C, Enter", formatcode(code.value).replaceAll("<br>","\n"));
+     }
+     
+     function clearCode()
+     {
+     		code.value = "";
+        code.valueFormat = "";
+        document.getElementById("code").innerHTML="";
+        code.value = code.head;
+        code_setHead();
+       	clearStory();	        
+     }
+     
+     function addToStory()
+     {
+     		var inputValue = null;
+     		storyLine.push({ID:(storyLine.id+=1), "value":inputValue});
+     }
+     
+     function clearStory()
+     {
+     		storyLine = [];
+     }
+     
+     function doInputBox()
+     {
+     		var body = document.getElementsByTagName("BODY")[0];
+        var newInputElement = "<div class=\"container-fluid\"><textarea class=\"form-control\" rows=\"5\" id=\"inputValue\" style=\"width:100%;height:40%;\"></textarea><br><button class=\"btn btn-default\" style=\"width:20%;height:30%;\">Done</button></div>";
+        body.innerHTML += "<div id=\"inputBox\" class=\"container-fluid\" style=\"text-align:center;z-index:1000;position:absolute;background: rgba(122, 130, 136, 0.5)!important;width:100%;height:120%;top:0px;left:0px;\"> <div id=\"inputElement\"  display: inline-block; class=\"well\" style=\"width:80%;height:20%;margin:auto;position:absolute;left:0;top:0;right:0;bottom:0;\"><p><strong>Description about the current step in your Quest</strong></p>" + newInputElement + "</div> </div>";
+     }
+     
+     function formatcode(str)
+     {
+				var v = str;
+        v = v.replaceAll("{","{<br>");
+        v = v.replaceAll(";",";<br>");
+        v = v.replaceAll("};","};<br>");
+        //v = v.replaceAll("}","}<br>");
+        v = v.replaceAll(");",");<br>");
+        v = v.replaceAll("\n","<br>");
+        return v;
+     }
+     
+    String.prototype.replaceAll = function(str1, str2, ignore) 
+		{
+    	return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+		} 
+  //-->
+  </script>
+
+</head>
+
+<body>
+	<div class="well">
+		<h1>Quest Designer</h1>
+	</div>
+
+	<div class="container-fluid">
+  	<div
+  		<div class="container-fluid" style="height:90%;">
+  			<h3><span style="margin-right:10px;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Quest Step Form</h3>
+  			<div class="well container-fluid col-md-12 col-lg-12 col-sm-12" style="Background-color:white;">
+  				
+        	<div class="row">
+            <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12" style="display:inline;">
+              <p><strong>Attribute: </strong></p>
+      				<input class="input-sm" id="clientAttribute" style="display:inline;"></input>
+      			</div>	
+            <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12" style="display:inline;">
+              <p><strong>Operator: </strong></p>
+      				<input class="input-sm" id="operator" style="width:40px;"></input>
+      			</div>
+            <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12" style="display:inline;">
+              <p><strong>Value: </strong></p>
+      				<input class="input-sm" id="value"></input>
+      			</div>
+            <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12" style="display:inline;">
+              <p><strong>Menu (on True): </strong></p>
+      				<input class="input-sm" id="menuOnTrue" style="width:110px;"></input>
+      			</div>
+            <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12" style="display:inline;">
+              <p><strong>Menu (on False): </strong></p>
+      				<input class="input-sm" id="menuOnFalse" style="width:110px;"></input>
+      			</div>
+            <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12" style="display:inline;"><br>
+              <button type="button" onClick="parseInputBoxes()" class="btn btn-danger" style="margin-left:20px;display:inline;">Add</button>
+            </div>
+          </div>
+  		
+    	</div>
+			<h3><span style="margin-right:10px;" class="glyphicon glyphicon-forward" aria-hidden="true"></span>View Steps</h3>
+      
+			<div style="margin:0px;overflow:auto;Background-color:white;" class="well container-fluid">
+  				<div id="code" class="well container-fluid col-md-4 col-lg-4 col-sm-12 col-xsm-4" style="overflow:auto;height:60%;margin-right:20px;">
+  				</div>
+        
+				<div class="well col-lg-2 col-md-2 col-sm-12" style="height:60%;margin-right:20px;">
+					<p style="text-align:center;"><strong>Actions</strong></p><hr>			
+					<div class="container-fluid">
+          	
+						<table class="table table-hover">
+							<tbody>
+								<tr>
+                	
+									<button type="button" onClick="copyCode()" class="btn btn-primary col-lg-12" style="width:100%;height:10%;"><span class="container-fluid" style="font-size:1vw;margin:0px;padding:0px;">Copy Code</span></button><br><br>
+                  <button type="button" onClick="clearCode()" class="btn btn-primary col-lg-12" style="width:100%;height:10%;"><span class="container-fluid" style="font-size:1vw;margin:0px;padding:0px;">Clear</span></button><br><br>
+                  <button type="button" onClick="javascript:window.open('http://www.tutorialspoint.com/online_c_formatter.htm','_blank')" class="btn btn-primary col-lg-12" style="width:100%;height:10%;"><span class="container-fluid" style="font-size:1vw;margin:0px;padding:0px;">Code Beautifier</span></button><br><br>
+                  <button type="button" onClick="javascript:window.open('','_blank')" class="btn btn-primary col-lg-12" style="width:100%;height:10%;"><span class="container-fluid" style="font-size:1vw;margin:0px;padding:0px;">Examples</span></button>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+				</div>
+		
+				<div class="well container-fluid col-lg-5 col-md-5 col-sm-12" style="overflow-y:auto;height:60%;">
+					<p style="text-align:center;"><strong>How to start</strong></p><hr>
+					<p>
+						This is a website to generate the code required to create the inner workings of a quest.
+						<br>
+						<br>
+
+						<strong>Example:</strong>
+						<br> say we put in the following values above:
+						<br>
+						<br>
+						<mark>Client Attribute</mark> Box -> isAdmin
+						<br>
+						<mark>Operator</mark> Box -> ==
+						<br>
+						<mark>Value</mark> Box -> True
+						<br>
+						<mark>Menu (on True)</mark> Box -> <mark style="background-color:#7ee84a;">MenuObject</mark> (global variable)
+            <br>
+            <mark>Menu (on False)</mark> Box -> MenuObject (global variable)
+            <br>
+            <br>
+            This will evaluate the following in <small><mark style="color:blue;">Torquescript</mark></small><br><br>
+            <small>%value = ClientObject.isAdmin == True;</small>
+            <br><br>
+            Then it will open the Menu (if provided) based on the %value returned.<br>
+            <br>
+            Each step should be considered consecutive and the Quest should be built accordingly.
+					</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+
+</html>

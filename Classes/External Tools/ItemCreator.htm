@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+  <HEAD><TITLE>Untitled</TITLE>
+  <META content="text/html; charset=windows-1252" http-equiv=Content-Type>
+  <META name=GENERATOR content="MSHTML 9.00.8112.16457"></HEAD>
+  
+  <script>
+  	class itemCreator
+    {
+    	getDTSDirectory()
+      {
+      	var d = document.getElementById("dir").value;
+        return d;	
+      }
+      
+    	getItemDatablock(itemName)
+      {
+      	var str = "datablock itemData(" + itemName + "item)\n{\n";
+        str += "\tcameraMaxDist = 0.1;\n";
+        str += "\tcanDrop = 1;\n";
+        str += "\tCategory = \"weapon\";\n";
+        str += "\tclassName = \"Tool\";\n";
+        str += "\tcolorShiftColor = \"0.5 0.5 0.5 1\";\n";
+        str += "\tdoColorShift = true;\n";
+        str += "\teleasticity = 0.2;\n";
+        str += "\temap = 1;\n";
+        str += "\tfriction = 0.6;\n";
+        str += "\ticonName = \"" + itemName + "\";\n";
+        str += "\timage = " + itemName + "image;\n";
+        str += "\tshapeFile = \"" + this.getDTSDirectory() + "\";\n";
+        str += "\tuiName = \"" + itemName + "\";\n";
+        str += "};\n\n";
+        
+        return str;
+      }
+      
+      getImageDatablock(itemName)
+      {
+      	var str = "datablock shapeBaseImageData(" + itemName + "image : hammerImage)\n{\n";
+        str += "\tprojectile = " + itemName + "projectile;\n";
+        str += "\titem = " + itemName + "item;\n";
+        str += "\tcolorShiftColor = \"0.5 0.5 0.5 1\";\n";
+        str += "\tdoColorShift = true;\n";
+        str += "\tshapeFile = \"" + this.getDTSDirectory() + "\";\n";
+        str += "};\n\n";
+        
+        return str;      
+      }
+      
+      getProjectileDatablock(itemName)
+      {
+      	var str = "datablock projectileData(" + itemName + "projectile)\n{\n";
+        str += "\tbounceElasticity = 0;\n";
+        str += "\tbounceFriction = 0;\n";
+        str += "\texplodeOnDeath = 1;\n";
+        str += "\tfadeDelay = 2;\n";
+        str += "\tgravityMod = 0;\n";
+        str += "\tlifetime = 1;\n";
+        str += "\tmask = $TypeMasks::FxBrickAlwaysObjectType | $TypeMasks::InteriorObjectType | $TypeMasks::TerrainObjectType;\n";
+        str += "\trange = 10;\n";
+        str += "};\n\n";
+        
+        return str;          
+      }
+      
+      getItemFunctions(itemName)
+      {
+      	var str = "function " + itemName + "Image::onFire(%this,%player)\n{\n";
+        str += "}\n";
+        str += "\n";
+        str += "function " + itemName + "Image::onStopFire(%this,%player)\n{\n";
+        str += "\t%player.playThread(0,root);\n";
+    		str += "}\n\n";
+      	str += "function " + itemName + "Image::onMount(%this,%player)\n{\n";
+        str += "}\n";
+        str += "\n";
+      	str += "function " + itemName + "Image::onUnMount(%this,%player)\n{\n";
+        str += "}\n";
+        str += "\n";
+        return str;
+      }
+      
+      download(itemName,str)
+      {
+      	var filename = itemName;
+      	//window.location.href = "data:text;charset=utf-8," + encodeURIComponent(str);
+        
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(str));
+        element.setAttribute('download', filename);
+        
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        
+        element.click();
+        
+        document.body.removeChild(element);
+      }
+    }
+    
+    var ic = new itemCreator();
+    
+    function onGenerate()
+    {
+   		var itemName = document.getElementById("UIName").value;
+      if(itemName == "")
+      {
+      	alert("No name provided");
+        return false;
+      }
+      var str = ic.getItemDatablock(itemName);
+      str += ic.getImageDatablock(itemName);
+      str += ic.getProjectileDatablock(itemName);
+      str += ic.getItemFunctions(itemName);
+      ic.download(itemName,str);
+    }
+  </script>
+  
+  
+  <BODY>
+  	<input id="UIName">Item UI name (no spaces)</input><br />
+    <input id="dir">Directory to .dts file</input><br />
+    <input type="file"></input><br>
+    <button onclick="onGenerate();">Generate</button>
+  </BODY>
+
+</HTML>
