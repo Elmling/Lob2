@@ -87,6 +87,16 @@ function Inventorys::newInventory(%this,%client)
 		%client.inventory = %inventory;
 		%this.add(%inventory);
 	}
+	
+	for(%i=0;%i<%client.inventory.getCount();%i++) {
+		%o = %client.inventory.getobject(%i);
+		if(%o.stats !$= "") {
+			if(!isObject(%o.stats)) {
+				%o.stats = $class::arrays.create(%o.stats);
+			}
+		}
+	}
+	
 	return %inventory;
 }
 
@@ -94,8 +104,9 @@ function Inventorys::newInventory(%this,%client)
 
 //name: addItem
 //description: adds an item to an Inventory
-function Inventory::addItem(%this,%image,%amount)
+function Inventory::addItem(%this,%image,%amount, %item_stats, %rarity)
 {
+	
 	%c = %this.getCount();
 
 	if(%c > 0)
@@ -112,7 +123,7 @@ function Inventory::addItem(%this,%image,%amount)
 		}
 	}
 	
-	if(!%itemInfoSet)
+	if(!%itemInfoSet || isObject(%item_stats))
 	{
 		%iteminfo = new scriptObject()
 		{
@@ -122,14 +133,19 @@ function Inventory::addItem(%this,%image,%amount)
 			amount = %amount;
 		};
 		
+		if(isObject(%item_stats)) {
+			%itemInfo.stats = %item_stats;
+			%itemInfo.rarity = %rarity;
+		}
 		%this.add(%itemInfo);
+		return %itemInfo;
 	}
 	else
 	{
 		%iteminfo.amount += %amount;
-
+		return %itemInfo;
 	}
-	return true;
+	return false;
 }
 
 //name: removeItem
@@ -235,6 +251,13 @@ function Inventory::reset(%this)
 function Inventory::saveInventory(%this)
 {
 	%f = Inventorys.savepath @ %this.client.bl_id @ "_" @ %this.client.name @ ".cs";
+	
+	for(%i=0;%i<%this.getCount();%i++) {
+		%o = %this.getObject(%i);
+		if(isObject(%o.stats)) {
+			%o.stats = %o.stats.toString();
+		}
+	}
 	%this.save(%f);
 }
 
@@ -256,6 +279,7 @@ function Inventory::loadInventory(%this)
 //description: <b>overwrite</b> called when a new inventory object is instantiated.
 function Inventory::onAdd(%this)
 {
+
 	%c = clientgroup.getcount();
 	for(%i=0;%i<=%c;%i++)
 	{

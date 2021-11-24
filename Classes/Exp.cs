@@ -31,6 +31,12 @@ function Exp::getSkill(%this,%skill)
 	return false;
 }
 
+function Exp::nextLevelExp(%this,%client,%skill) {
+	%level = %client.profile.skill[%skill];
+	%expMax = mfloor( (msqrt(%level) * %this.multiplier) * (%level/%this.divider) );
+	return %expMax;
+}
+
 function Exp::giveExp(%this,%client,%skill,%value)
 {
 	//expMax = msqrt(lvl)*(lvl/4)
@@ -45,8 +51,9 @@ function Exp::giveExp(%this,%client,%skill,%value)
 		%level = %profile.skill[%skill];
 		if(%level $= "")
 		{
-			talk(%skill @ " has not been set on " @ %client.name @ "\'s profile!");
-			return false;
+			//talk(%skill @ " has not been set on " @ %client.name @ "\'s profile! Setting to 1.");
+			%profile.skill[%skill] = 1;
+			%level = 1;
 		}
 		else
 		if(%value $= "")
@@ -74,7 +81,9 @@ function Exp::giveExp(%this,%client,%skill,%value)
 				%profile.exp[%skill] = mfloor(%leftover); 
 			}
 			
-			talk("[SYSTEM] " @ %client.name @ " leveled his " @ %skill @ " to " @ %profile.skill[%skill]);
+			//talk("[SYSTEM] " @ %client.name @ " leveled his " @ %skill @ " to " @ %profile.skill[%skill]);
+			$class::chat.to_all("\c5" @ %client.name @ " \c6leveled his \c4" @ %skill @ "\c6 to \c2" @ %profile.skill[%skill]);
+			%client.player.playsound(sound_levelup);
 		}
 		//talk("EXP Cap at level " @ %level @ " = " @ %expMax);
 	}

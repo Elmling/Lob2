@@ -53,6 +53,10 @@ package class_chatSystem
 };
 activatePackage(class_chatSystem);
 
+function talkTo(%cl,%m) {
+	messageClient(%cl,'',%m);
+}
+
 //name: getUsersInRange
 //description: gets all available players in range
 //range is defined in $class::chatSystem

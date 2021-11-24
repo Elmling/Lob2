@@ -13,8 +13,16 @@
 
 //***** menuSystem Class ***** 
 
-if(!isObject($class::menuSystem))
-	$class::menuSystem = new scriptGroup(menuSystem);
+if(isObject($class::menuSystem))
+	$class::menuSystem.delete();
+
+$class::menuSystem = new scriptGroup(menuSystem);
+
+function menuSystem::showMenu(%this,%client,%name) {
+	%menu = %this.getMenu(%name);
+	if(isObject(%menu))
+		%menu.showMenu(%client);
+}
 
 //name: newMenuObject
 //description: creates a new menu.
@@ -218,6 +226,8 @@ function menuObject::onInputValueRecieved(%this,%client,%value)
 //description: attempts to show a menu
 function menuObject::showMenu(%this,%client,%indexHighlight)
 {
+	if(%indexHighlight $= "")
+		%indexHighlight = 0;
 	%c = %this.getcount();
 	if(%c <= 0)
 	{
@@ -262,7 +272,7 @@ function menuObject::showMenu(%this,%client,%indexHighlight)
 		}
 	}
 	%bodyText = %this.bodytext;
-	%menuItemDisplay = "\c6" @ %bodyText @ "\n\n" @ %menuItemDisplay @ "\n\n<just:right><font:arial:16>\c3Use Keypad To Nav<tab:10>";
+	%menuItemDisplay = "\c6" @ %bodyText @ "\n\n" @ %menuItemDisplay @ "\n\n<just:right><font:arial:16>\c3Use Numpad Keys To Nav<tab:10>\n<just:right><font:arial:16>\c30 to close";
 	centerprint(%client,%menuItemDisplay);
 }
 

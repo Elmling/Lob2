@@ -29,11 +29,12 @@ if(!isObject($class::stabilizer))
 //the amount of lines. The more lines, the harder it is
 //and the faster it goes off center. line formula is 
 //%difficulty * $class::stabilizer.lineCount;. So a %difficulty of 1, will produce 5 lines.
-function stabilizer::begin(%this,%client,%difficulty,%milliseconds)
+function stabilizer::begin(%this,%client,%difficulty,%milliseconds,%identifier)
 {
 	%client.stabilizer["difficulty"] = %difficulty;
 	%client.stabilizer["ms"] = %milliseconds;
 	%client.stabilizer["startTime"] = getSimTime();
+	%client.stabilizer["identifier"] = %identifier;
 	
 	%this.loop(%client);
 }

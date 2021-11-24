@@ -302,21 +302,23 @@ function gameConnection::canCraft(%this,%nameOrObj)
 function gameConnection::craftingStart(%this,%recipe,%amount)
 {
 	//TODO
+	//talk("r = " @ %recipe);
 	if(!isObject(%recipe))
 		return false;
-	
-	if(%this.craftWarn $= "")
-	{
-		%this.craftWarn = true;
-		centerPrint(%this,"\c6Get ready to keep the stabilizer centered by using \c4Numpad \c34 \c6and \c36\c6.",5);
-		%this.schedule(4500,craftingStart,%recipe,%amount);
-		return;
-	}
+	//talk("past");
 
 	%c = $class::crafting;
 	
 	if(%this.canCraft(%recipe))
 	{
+		
+		if(%this.craftWarn $= "")
+		{
+			%this.craftWarn = true;
+			centerPrint(%this,"\c6Get ready to keep the stabilizer centered by using \c4Numpad \c34 \c6and \c36\c6.",5);
+			%this.schedule(4500,craftingStart,%recipe,%amount);
+			return;
+		}
 		%time = %recipe.getAnimationTime();
 		
 		if(%amount !$= "")
@@ -338,18 +340,22 @@ function gameConnection::craftingStart(%this,%recipe,%amount)
 				}
 			}
 			
-			%newTime = mfloor(%time/2);
+			//%newTime = mfloor(%time/2);
 			%newAmount = mceil(%amount/2);
-			
-			%newTime = %newTime * %newAmount;
-			%time = %newTime;
+			if(%newAmount == 0)
+				%newAmount = 1;
+			//talk("new amount = " @ %newAmount);
+			%newTime = %time * %newAmount;
+			%time = mfloor(%newTime);
 		}
 		
 		%time = mclamp(%time,2000,60000);
 		%stabilizer = $class::stabilizer;
 		%stabilizer.begin(%this,10,%time);
-		%this.player.playthread(0,crafting);
+		//%this.player.playthread(0,smelting);
+		%this.crafting_animate();
 		%this.player.schedule(%time + 500,playthread,0,root);
+		//talk("time = " @ %time);
 		%this.schedule(%time + 500,craftingFinish,%recipe,%amount);
 		
 	}
@@ -367,11 +373,21 @@ function gameConnection::craftingStart(%this,%recipe,%amount)
 	%this.craftWarn = "";
 }
 
+function gameconnection::crafting_animate(%this)
+{
+	cancel(%this.crafting_animate_loop);
+	
+	%this.player.playthread(0,smelting);
+	
+	%this.crafting_animate_loop = %this.schedule(2500,crafting_animate);
+}
+
 //name: craftingFinish
 //description: cleanup give items, remove items, etc
 function gameConnection::craftingFinish(%this,%recipe,%amountt)
 {
 	//TODO
+	cancel(%this.crafting_animate_loop);
 	%score = %this.stabilizer["lastScore"];
 	if(%score > 10 + getRandom(-2,6))
 	{
@@ -383,8 +399,8 @@ function gameConnection::craftingFinish(%this,%recipe,%amountt)
 			if(%amountt <= 1)
 				%s = "s";
 			%inventory.addItem(%recipe.onComplete["item"],%recipe.onComplete["amount"] * %amountt);
-			centerPrint(%this,"\c4You crafted " @ %amountt @ " \c6" @ %recipe.onComplete["item"] @ %s @ " \c4- \c6" @ %inventory.getItem(%recipe.onComplete["item"]).amount @ "\c4 in total.",4);
-			
+			centerPrint(%this,"\c4You crafted " @ %amountt @ " set of \c6" @ %recipe.onComplete["item"] @ %s @ " \c4- \c6" @ %inventory.getItem(%recipe.onComplete["item"]).amount @ "\c4 in total.",4);
+			$class::worldText.show_at(vectorAdd(%this.player.getEyePoint(),"0 0 1"),"Crafted " @ %amountt @ " set of " @ %recipe.onComplete["item"] @ %s, 5000);
 			%e = $class::exp;
 			%e.giveExp(%this,%recipe.expType,%recipe.exp * %amountt);
 			
