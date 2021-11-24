@@ -18,7 +18,7 @@ if(!isObject($class::avatars))
 	$class::avatars = new scriptGroup(avatars)
 	{
 		//change path upon release
-		path = "base/avatar api/avatars/";
+		path = "base/lob2/avatar api/avatars/";
 	};
 	
 	

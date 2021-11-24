@@ -67,8 +67,9 @@ function Areas::newArea(%this,%name,%vectorX,%vectorY)
 //name: newArea_dupe
 //description: utilize the duplicators selection box to easily make
 //a new Area.
-function Areas::newArea_dupe(%this,%name,%selection)
+function Areas::newArea_dupe(%this,%name,%client)
 {
+	%selection = %client.ndselection;
 	if(!isObject(%selection))
 	{
 		talk("Error - > newArea_dupe(%name,%selection (.ndSelection));");
@@ -76,6 +77,7 @@ function Areas::newArea_dupe(%this,%name,%selection)
 	}
 	
 	%type = %selection.getName();
+	talk(%type.getname());
 	if(%type $= "nd_selectionBox")
 	{
 		%vectorX = %selection.point1;
@@ -87,6 +89,7 @@ function Areas::newArea_dupe(%this,%name,%selection)
 		%vectorY = %selection.maxx SPC %selection.maxy SPC %selection.maxZ;
 	}
 	%area = %this.newArea(%name,%vectorX,%vectorY);
+	talk("area - > " @%area SPC %vectorX SPC %vectorY);
 	return %area;
 }
 
