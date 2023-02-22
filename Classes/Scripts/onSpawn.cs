@@ -29,36 +29,7 @@ package scripts_onSpawn
 	
 	function menuObject::onInputValueRecieved(%this,%client,%value)
 	{			
-		%p = parent::onInputValueRecieved(%this,%client,%value);
-		if(%client.profilePending == true && %client.profilePending2 $= "")
-		{
-			%client.userName = %value;
-			%client.profilePending2 = true;
-			$class::menuSystem.getMenu("input").showInputMenu(%client);
-			bottomPrint(%client,"<font:impact:25>\c6Step 1: Enter Username\n<div:1>\c6Step 2: Enter a password.\n\c3Use the Chat.");
-		}
-		else
-		if(%client.profilePending == true && %client.profilePending2 == true)
-		{
-			%client.profilePending = "";
-			%client.profilePending2 = "";
-			%client.password = %value;
-			%val = $class::profiles.newProfile(%client,%client.username,%client.password);
-			if(isObject(%val))
-			{
-				%client.username = "";
-				%client.password = "";
-				talk(%client.name @ " created a profile.");
-				schedule(500,0,bottomprint,%client,"",1);
-			}
-			else
-			{
-				%client.profilePending = true;
-				%client.username = "";
-				%client.password = "";
-				talk(%client.name @ " failed to create a profile: " @ $class::profiles.failReason[%client]);
-			}
-		}
+        // removed profile creation here..
 		return %p;
 	}
 };

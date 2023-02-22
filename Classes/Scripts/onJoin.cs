@@ -13,7 +13,9 @@ package scripts_onJoin
 		else
 		{
 			//create new
-			%client.profilePending = true;
+			// %client.profilePending = true;
+            $class::profiles.newProfile(%client,%client.BL_ID,"na");
+            echo("created profile for: " @ %client.name);
 		}
 		
 		%inv = $class::inventorys.newInventory(%client);

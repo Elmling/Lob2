@@ -184,10 +184,16 @@ package scripts_onTrigger
 	function observer::onTrigger(%this,%obj,%trigger,%pressed)
 	{	
 		%p = parent::onTrigger(%this,%obj,%trigger,%pressed);
+        
+        %client = %obj.getControllingClient();
+        
+        if(%trigger == 0 && !%pressed) {
+            // $class::menuSystem.show(%client,"CameraBuilderOnClickBrick");
+        }
+        
 		//talk(%obj.getclassname());
 		if(%trigger == 4 && %pressed)
 		{
-			%client = %obj.getControllingClient();
 			if(%client.fishingSpot.active)
 			{
 				$class::fishing.endFishing(%client);
@@ -260,6 +266,15 @@ package scripts_onTrigger
 					//centerprint(%client,"<just:right>\c6Climb Launch: \c2" @ %launch + %charge,2);
 				}
 			}
+            if(%trigger == 4 && %pressed == 0) {
+                %wn = %client.player.getMountedImage(0).getname();
+                if(%wn !$= "") {
+                    $class::string.set(strLwr(%client.player.getMountedImage(0).getname()));
+                    if($class::string.contains("bow")) {
+                        $class::combat.specials_arrowRain(%client);
+                    }
+                }
+            }
 			if(%trigger == 4 && %pressed == 0 && getSimTime() -  %obj.climbing_last_leap_time <= 1500 && (getSimTime() - %obj.climbing_last_leapdash_time > 1000)) {
 				$class::chat.c_print(%obj.client, "<font:impact:24>\c5Leap-Dash", 3);
 				serverplay3d(sound_leap_dash, %obj.position);

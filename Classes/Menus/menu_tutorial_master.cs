@@ -11,7 +11,8 @@ $menu::tutorial_master.class = "Menu";
 //MENU INPUT $menu::tutorial_master.addMenuItem("Menu Item","$menu::tutorial_master.showInputMenu(#CLIENT);");
 //MENU REGULAR $menu::tutorial_master.addMenuItem("Menu Item","");
 
-$menu::tutorial_master.addMenuItem("Get Task","talk(\"You fokin wot m8?\");");
+$menu::tutorial_master.addMenuItem("Get Task","if(!#CLIENT.profile.tutorial_hasHatchet){#CLIENT.inventory.addItem(\"Hatchet\",1);#CLIENT.inventory.addItem(\"FishingPole\",1);#CLIENT.inventory.addItem(\"pickaxe\",1);#CLIENT.profile.tutorial_hasHatchet=true;$class::chat.b_print(#CLIENT,\"TASK: 5 pine wood, 5 copper, 5 iron (Light key to open Inventory).\");}");
+
 $menu::tutorial_master.addMenuItem("Leave Tutorial","if(#CLIENT.profile.tutorial_complete)servercmdhome(#CLIENT);");
 
 

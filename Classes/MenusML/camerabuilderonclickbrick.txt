@@ -1,0 +1,7 @@
+-t CameraBuilderOnClickBrick > appls
+-e Colors > serverCmdCB_onSelectBrick(#CLIENT);
+-e Delete > mnu-camerabuilderdelete-mnu
+
+function serverCmdCB_onSelectBrick(%cl) {
+	talk("worked");
+}

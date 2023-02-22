@@ -1,8 +1,9 @@
 
-
+// 
 
 //output
 registerOutputEvent(gameConnection,lob2_showMenu,"list Menu 0 Input 1	string 100 100",1);
+registerOutputEvent(gameConnection,lob2_showMenuByName,"string 100 100",1);
 registerOutputEvent(gameConnection,lob2_CL_check,"string 100 100	list > 0 < 1 >= 2 <= 3 $= 4 !$= 5 == 6 != 7	string 100 100");
 registerOutputEvent(gameConnection,lob2_CL_checkInventory,"string 100 100	list > 0 < 1 >= 2 <= 3 $= 4 !$= 5 == 6 != 7	int 1 1000 1");
 registerOutputEvent(gameConnection,lob2_CL_set,"string 100 100	list = 0	string 100 100",1);
@@ -71,6 +72,12 @@ function gameConnection::lob2_showMenu(%this,%type,%str,%cl)
 		%menu.setTempBody(%str);
 		%menu.showInputMenu(%this);
 	}
+}
+
+function gameConnection::lob2_showMenuByName(%this,%str,%cl)
+{
+    // %m=$class::menuSystem.getmenu(\"fishmenu\");%m.showmenu(#CLIENT,0);
+    %m = $class::menuSystem.getmenu(%str);%m.showmenu(%cl,0);
 }
 
 function gameConnection::lob2_CL_checkInventory(%this,%item,%operator,%val)

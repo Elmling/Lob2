@@ -18,6 +18,13 @@ package scripts_onClick
 			if(%o.getclassname() $= "fxdtsBrick")
 			{
 				%client.lastBrickClicked = %o;
+                if(stripos(%o.dataBlock,"brickfirepitdata") >= 0) {
+                    %menu = $class::menusystem.getmenu("cooking");
+					%menu.showmenu(%client,0);
+                }
+                if(%o.getName() $= "_explore") {
+                    %client.player.setTransform(vectoradd(%client.player.position,"0 0 165"));
+                }
 				if(stripos(%o.dataBlock,"stage4data") >= 0) {
 					if(!isObject(%o.seed)) {
 						%seed_type = strReplace(%o.dataBlock,"_"," ");
@@ -154,6 +161,7 @@ package scripts_onClick
 					%menu.showMenu(%client);
 				}
 			}
+
 			if(%o.name !$= "")
 			{
 				%menuObject = menuSystem.getMenu(%o.name);

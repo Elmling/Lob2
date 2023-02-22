@@ -1,0 +1,6 @@
+-t test > this is a test menu
+-e toast > mnu-test2-mnu
+
+-t test2 > does this work?
+-e yes > talk("xD");
+
