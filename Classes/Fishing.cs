@@ -59,6 +59,7 @@ function fishing::endFishing(%this,%client)
 		clearbottomprint(%client);
 		%client.player.playthread(2,root);
 		$class::fishing.fishingSpot.deleteHook(%client);
+        %client.player.setImageTrigger(0,0);
 	}
 	cancel(%client.fishingSpot.bitten.fish_reelInLoop);
 }
@@ -113,6 +114,8 @@ function fishingSpot::newSpot(%this,%client,%location)
 		%client.fishingSpot = %fp;
 		//talk("New Fishing Spot created for " @ %client.name);
 	}
+    
+    $class::camera.orbitPos(%client,vectorAdd(%location,"0 0 8"));
 	
 	%fp.time_created = getSimTime();
 
@@ -170,20 +173,24 @@ function fishGroup::newFish(%this,%location)
 			type = %type;
 			rarity = "Normal";
 		};
+        
+        %weight = getRandom(1,2);
 		
 		if(getRandom(0,3) == 1)
 		{
 			%fish.setScale("1.7 1.7 1.7");
 			%fish.rarity = "Big";
+            %weight += getRandom(3,6);
 		}
 		
 		if(getRandom(0,10) <= 2)
 		{
 			%fish.setScale("2 2 2");
-			%fish.rarity = "Huge";			
+			%fish.rarity = "Huge";
+            %weight += getRandom(6,12);
 		}
 		
-		
+		%fish.weight = %weight;
 		%this.add(%fish);
 		%fish.roam();
 		%fish.fish_checkBait();
@@ -433,13 +440,19 @@ function aiplayer::fish_reelIn(%this,%player)
 	if(!isObject(%player))
 		return false;
 	
+    // Caught fish, give player rewards
 	if(vectorDist(%pp,%fp) <= 6)
 	{
 		%player.playthread(0,root);
 		%player.playthread(2,root);
 		$class::camera.root(%player.client);
 		$class::fishing.endFishing(%player.client);
-		%player.client.inventory.addItem("Raw Salmon","1");
+		%fishItem = %player.client.inventory.addItem("Raw Salmon","1");
+        if(isObject(%fishItem)) {
+            if(%this.rarity $= "big" || %this.rarity $= "huge") {
+                $class::chat.to_all(%player.client.name @ " has caught a fish weighing in at: \c4" @ %this.weight @ " \c6lbs!");
+            }
+        }
 		%this.schedule(1,delete);
 		return false;
 	}

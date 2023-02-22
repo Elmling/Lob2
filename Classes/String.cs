@@ -24,6 +24,7 @@ function string::set(%this,%str)
 		};
 		%this.add(%letterO);
 	}
+    return %this;
 }
 
 function string::cap_first(%this)
@@ -70,6 +71,15 @@ function string::contains(%this,%cont)
 	return false;
 }
 
+function string::startsWith(%this,%phrase,%trim) {
+    if(%trim $= "" || %trim == 1)
+        %phrase = trim(%phrase);
+    if(strLwr(getSubStr(%this.string,0,strLen(%phrase))) $= strLwr(%phrase)) {
+        return true;
+    }
+    return false;
+}
+
 function string::splice(%this,%indexa,%indexb)
 {
 	%len = strLen(%this.string);
@@ -106,6 +116,28 @@ function string::splice(%this,%indexa,%indexb)
 	}
 
 	return %build;
+}
+
+function string::split(%this,%del) {
+    %arr = $class::arrays.create("");
+    %bb = "";
+    %awaiting = false;
+    for(%i=0;%i<%this.getcount();%i++)
+	{
+        %v = %this.getObject(%i).value;
+        if(%v $= %del) {
+            %arr.push(%bb);
+            %bb = "";
+            %awaiting = false;
+            continue;
+        }
+        %awaiting = true;
+        %bb = %bb @ %v;
+    }
+    if(%awaiting) {
+        %arr.push(%bb);
+    }
+    return %arr;
 }
 
 function string::update(%this)

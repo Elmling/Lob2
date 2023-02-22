@@ -29,7 +29,9 @@ if(!isObject($class::InventoryInterface))
 		command["Blowdart"] = "#CLIENT.player.mountImage(bdartimage,0);$class::combat.show_weapon_bonus(#CLIENT);";
 		command["Hatchet"] = "#CLIENT.player.mountImage(hatchetimage,0);$class::combat.show_weapon_bonus(#CLIENT);";
 		command["Pickaxe"] = "#CLIENT.player.mountImage(pickaxeimage,0);$class::combat.show_weapon_bonus(#CLIENT);";
+        command["fishingpole"] = "#CLIENT.player.mountImage(fishingpoleimage,0);$class::combat.show_weapon_bonus(#CLIENT);";
 		command["Gold"] = "$class::chat.bp(#CLIENT,\"You've picked up some Gold\");";
+        command["Pine Wood"] = "$class::chat.b_print(#CLIENT,\"You get a fire started\", 10);$class::cooking.buildfire(#CLIENT, \"Pine\");";
 	};
 
 //name: display

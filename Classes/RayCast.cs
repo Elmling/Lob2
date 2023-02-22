@@ -111,6 +111,46 @@ function raycast::getCollidePoint(%this,%client,%range)
 	return false;
 }
 
+function raycast::cameraGet(%this,%camera,%range) {
+    %player = %camera;
+	%EyeVector = %player.getEyeVector();
+	%EyePoint = %player.getEyePoint();
+	if(%range $= "")
+		%Range = 100;
+	%RangeScale = VectorScale(%EyeVector, %Range);
+	%RangeEnd = VectorAdd(%EyePoint, %RangeScale);
+	%raycast = containerRayCast(%eyePoint,%RangeEnd,$TypeMasks::All, %player);
+	%o = getWord(%raycast,0);
+	
+	if(isObject(%o))
+	{
+		return %o;//getwords(%raycast,1,3);
+		//return getWords(%o,
+	}
+	
+	return false;
+}
+
+function raycast::cameraGetCollidePoint(%this,%camera,%range) {
+    %player = %camera;
+	%EyeVector = %player.getEyeVector();
+	%EyePoint = %player.getEyePoint();
+	if(%range $= "")
+		%Range = 100;
+	%RangeScale = VectorScale(%EyeVector, %Range);
+	%RangeEnd = VectorAdd(%EyePoint, %RangeScale);
+	%raycast = containerRayCast(%eyePoint,%RangeEnd,$TypeMasks::All, %player);
+	%o = getWord(%raycast,0);
+	
+	if(isObject(%o))
+	{
+		return getwords(%raycast,1,3);
+		//return getWords(%o,
+	}
+	
+	return false;
+}
+
 package _raycast
 {
 	

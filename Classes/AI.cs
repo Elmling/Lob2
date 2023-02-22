@@ -36,6 +36,9 @@ $class::bots.level["Don The Fisher"] = $class::arrays.create("5,25");
 $class::bots.wield["Don The Fisher"] = $class::arrays.create("fishingpoleimage");
 $class::bots.drop["Don The Fisher"] = $class::arrays.create("fancysworditem, bdartitem, pickaxeitem, hatchetitem").meta("drop_chance","35");
 
+$class::bots.aggressive["warrior"] = true;
+$class::bots.aggressive["horse"] = true;
+
 //name: onAdd
 //description: when the class is first created
 function bots::onAdd(%this)
@@ -473,8 +476,6 @@ function aiplayer::should_flap(%this)
 	return false;
 }
 
-$aggressive["warrior"] = true;
-
 //name: roam
 //description: Makes the aiPlayer roam
 function aiplayer::roam(%this)
@@ -498,9 +499,9 @@ function aiplayer::roam(%this)
 		%this.fly();
 	}
 	
-	if($aggressive[getWord(%this.name,0)]) {
+	if($class::bots.aggressive[getWord(%this.name,0)]) {
 		%cp = %this.getClosestPlayer();
-		if(%cp <= 15) {
+		if(vectorDist(%cp.position,%this.position) <= 15) {
 				%this.fight(%cp);
 		}
 	}
@@ -513,7 +514,7 @@ function aiplayer::roam(%this)
 	if(vectorDist(%roamObj.destination,%this.position) <= 3.2)
 	{
 		%this.setMoveDestination(%this.position);
-		if(%this.roam.lookAtPlayersBoolean)
+		if(%roamObj.lookAtPlayersBoolean)
 		{
 			%cp = %this.getClosestPlayer();
 			if(isObject(%cp))
@@ -767,7 +768,7 @@ function aiplayer::clearTask(%this,%keep)
 	%this.clearaim();
 	if(%keep !$= "movement")
 		%this.setMoveDestination(%this.position);
-	%this.roamHomePos="";
+	%this.roam.HomePos="";
 	cancel(%this.fightloop);
 	%this.firstfight="";
 	%this.timenearenemy="";
@@ -952,10 +953,6 @@ function aiplayer::do_item_drop(%this) {
 }
 
 
-function aiplayer::set_aggressive(%this,%boolean) {
-	%this.aggressive = true;
-}
-
 //end bot randomizer
 
 //ai combat
@@ -1073,6 +1070,10 @@ function aiplayer::fight(%this,%enemy) {
 		%this.do_item_drop(%enemy);
 		return false;
 	}
+    
+    if(!isObject(%this)) {
+        return false;
+    }
 	
 	if(%enemy $= "")
 	{
@@ -1228,6 +1229,52 @@ function aiplayer::fight(%this,%enemy) {
 			return false;
 	}
 	%this.fightloop = %this.schedule(500,fight,%enemy);
+}
+
+// main spawn method. for all npc classes
+function npc::spawn(%this,%pos) {
+	if(%pos !$= "") %this.position = %pos;
+	if(%this.position $= "") {
+		$class::chat.to_all(%this.name @ " needs a position attribute, or the position passed through this npc::spawn(%this,%pos(optional) ) method.");
+		return false;
+	}
+	if(%this.bot $= "" || !isObject(%this.bot)) {
+		%this.bot = $class::bots.newBot(%this.name_clean, %this.position);
+		if(isObject(%this.bot)) {
+			%this.bot.schedule(100,setTransform,%this.position);
+			// need to safe check that all attributes were declared...
+			// this.roam, this.name, etc
+			%this.bot.npc_handle = %this;
+			//talk("we are here, setting " @ %this.bot @ " handle to " @ %this);
+			%this.bot.schedule(1500,playthread,0,"root");
+			if(%this.name_distance $= "")
+				%this.bot.schedule(10,setshapenamedistance,25);
+			else
+				%this.bot.schedule(10,setshapenamedistance, %this.name_distance);
+			
+			if(%this.scale !$= "")
+				%this.bot.schedule(10,setScale, %this.scale);
+			if(%this.dataBlock !$= "")
+				%this.bot.schedule(10,changeDatablock, %this.dataBlock);
+			if(%this.command $= "roam") {
+				%this.bot.newRoamObject(%this.position, %this.roam, true);
+				%this.bot.schedule(1500,roam);
+			} else if(%this.command $= "") {
+				// do nothing..
+			} else {
+				eval("%this.bot." @ %this.command);
+			}
+			%this.bot.schedule(1,playthread,0,root);
+			%onSpawn = strReplace(%this.onSpawn,"THIS",%this.bot);
+			$class::chat.to_all(%this.name_clean @ " has spawned");
+			if(%this.avatar $= "default")
+				%this.bot.av_default();
+			if(%this.movespeed !$= "")
+				%this.bot.setmovespeed(%this.movespeed);
+		} else 
+			return false;
+	}
+	return %this;
 }
 
 //end aicombat

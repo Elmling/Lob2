@@ -10,7 +10,7 @@ $class::dungeon.generation_default_time = 3500;
 $class::dungeon.sessions = new simSet();
 $class::dungeon.spam_dungeons = new simSet();
 $class::dungeon.water_height_set = false;
-$class::dungeon.water_height = 18;
+$class::dungeon.water_height = 17;
 $class::dungeon.spectate_rotation = "-0.0198516 0.706969 -0.706966 3.18129";
 
 function test(){
@@ -415,12 +415,16 @@ function dungeonInstance::place_enemies(%this, %curr_index) {
 		%db = "lobarmor BlockoParrotHoleBot ghoulArmor horseArmor";
 		%dict = $class::dictionaries.create("lobarmor=Warrior,BlockoParrotHoleBot=Parrot,ghoularmor=Skeleton,horseArmor=Horse");
 		%dict_armor = $class::dictionaries.create("lobarmor=0.5 0.3 0.1 1");
+        %dict_scale = $class::dictionaries.create("ghoularmor=2.2 2.2 2.2");
 		for(%i=0;%i<%amount;%i++) {
 			%db_choice = getWord(%db,getRandom(0,getWordCount(%db)-1));
 			%b = $class::bots.newBot(%dict.index(%db_choice), vectorAdd(%brick.position,getRandom(-5,5) SPC getRandom(-5,5) SPC "10"));
 			if(%dict_armor.index(%db_choice) !$= "0") {
 				%b.setNodeColor("ALL",%dict_armor.index(%db_choice));
 			}
+            if(%dict_scale.index(%db_choice) !$= "0") {
+                %b.setScale(%dict_scale.index(%db_choice));
+            }
 			%name = %dict.index[%db_choice];
 			%b.changeDatablock(%db_choice);
 			%this.enemies.add(%b);
@@ -554,7 +558,7 @@ function dungeonInstance::place_islands(%this,%curr_index, %amount) {
 			dataBlock = "brick" @ %size @ "x" @ %size @ "fData";
 			scale = "1 1 1";
 			rotation = "0 0 1 90.0002";
-			colorID = "61";
+			colorID = "20";
 			isPlanted = "1";
 			dungeon_type = "island";
 		}).angleID="0";
@@ -590,7 +594,7 @@ function dungeonInstance::place_islands(%this,%curr_index, %amount) {
 				dataBlock = "brick2x2x2octoconeinvdata";
 				scale = "1 1 1";
 				rotation = %this.random_rotation();
-				colorID = "61";
+				colorID = "13";
 				isPlanted = "1";
 				dungeon_type = "island";
 				colorfxid = 3; //glow
@@ -792,10 +796,10 @@ function servercmddungeons(%client) {
 }
 
 function serverCmdDungeon(%client,%clear) {
-	if(!%client.profile.starter_pack) {
-		$class::chat.to(%client, "You need a \c4Starter Pack\c6 from the \c5Dungeon Master \c6before trying to create a \c4Dungeon\c6 instance.");
-		return false;
-	}
+	//if(!%client.profile.starter_pack) {
+	//	$class::chat.to(%client, "You need a \c4Starter Pack\c6 from the \c5Dungeon Master \c6before trying to create a \c4Dungeon\c6 instance.");
+	//	return false;
+	//}
 	if(%client.dungeon $= "" || !isObject(%client.dungeon))
 		%client.dungeon = $class::dungeon.create(%client);
 	
@@ -827,7 +831,12 @@ function serverCmdDungeon(%client,%clear) {
 }
 
 function serverCmdHome(%client) {
-	$class::chat.to(%client, "You teleport \c5Home\c6!", 1500);
+	
+    if(%client.player.isMounted()){
+        $class::chat.c_print(%client,"Please dismount before trying to teleport home!",3);
+        return false;
+    }
+    $class::chat.to(%client, "You teleport \c5Home\c6!", 1500);
 	%client.player.setTransform(vectorAdd("702 345 28",getRandom(-5,5) SPC getRandom(-5,5) SPC 0));
 	//serverplay3d(sound_teleport, %client.player.position);
 	%client.player.schedule(50,playsound,sound_teleport);

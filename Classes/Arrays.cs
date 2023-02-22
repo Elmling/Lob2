@@ -5,6 +5,8 @@ if(!isObject($class::arrays)) {
 	};
 }
 
+// can use multiple args as array items, or provide 1 argument with
+// using commas as a delimiter of a single string "item1,item2,item3,..etc"
 function arrays::create(%this,%a0,%a1,%a2,%a3,%a4,%a5,%a6,%a7,%a8,%a9) {
 	%array = false;
 	if(%a1 $= "") {
@@ -126,8 +128,21 @@ function array::push_first(%this,%obj) {
 	return %this;
 }
 
+// same as push
 function array::push_last(%this,%obj) {
 	if(!isObject(%obj)) {
+		%v = %obj;
+		%obj = new scriptObject() {
+			value =  %v;
+		};
+	}
+	%this.add(%obj);
+	return %this;
+}
+
+// same as push last
+function array::push(%this,%obj) {
+    if(!isObject(%obj)) {
 		%v = %obj;
 		%obj = new scriptObject() {
 			value =  %v;

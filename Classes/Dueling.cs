@@ -18,12 +18,15 @@ function dueling::new_duel(%this, %cl1, %cl2) {
 	
 	%session.clients.add(%cl1);
 	%session.clients.add(%cl2);
+    %this.sessions.add(%session);
+    return %session;
 }
 
 function duelingSession::start(%this) {
 	if(%this.isValid()) {
 		%this.start_time = getSimTime();
 		$class::chat.to_all("\c4" @ %this.clients.getObject(0).name @ " \c6and \c4" @ %this.clients.getObject(1).name @ "\c6 have started a \c5Duel\c6.");
+        
 	}
 }
 

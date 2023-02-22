@@ -20,8 +20,15 @@ $class::menuSystem = new scriptGroup(menuSystem);
 
 function menuSystem::showMenu(%this,%client,%name) {
 	%menu = %this.getMenu(%name);
-	if(isObject(%menu))
+	if(isObject(%menu)) {
 		%menu.showMenu(%client);
+        return true;
+    }
+    return false;
+}
+
+function menuSystem::show(%this,%client,%name) {
+    %this.showMenu(%client,%name);
 }
 
 //name: newMenuObject

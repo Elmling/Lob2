@@ -25,7 +25,12 @@ $class::cooking = new scriptGroup()
 
 function cooking::buildFire(%this, %client, %woodtype)
 {
-	%pos =vectorAdd(%client.player.position,vectorScale(%client.player.getForwardVector(),2));
+    if(%client.inventory.getItem(%woodType @ " Wood").amount <= 0) {
+        talk("Not enough wood rip");
+        return false;
+    }
+    %client.inventory.removeItem(%woodtype @ " Wood", 1);
+	%pos = vectorAdd(%client.player.position,vectorScale(%client.player.getForwardVector(),2));
 	%pos = vectorAdd(%pos,"0 0 0.25");
 	$p = %pos;
 
@@ -39,8 +44,19 @@ function cooking::buildFire(%this, %client, %woodtype)
 		isplanted=true;
 		colorId="1";
 	}).angleID="0";
+    
+
 	%b.plant();
-	%b.schedule(2000,delete);
+    
+    %em = new particleEmitterNode() {
+        dataBlock = "GenericEmitterNode";
+        emitter = burnemitterb;
+        scale = "0.5 0.5 0.5";
+        position = %b.getWorldBoxCenter();
+        velocity = 1;
+    };
+	%b.schedule($class::cooking.alive_time[%woodtype],delete);
+    %em.schedule($class::cooking.alive_time[%woodtype],delete);
 }
 
 function cooking::fuelFire(%this, %firebrick, %woodtype) {

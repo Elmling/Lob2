@@ -4,6 +4,7 @@ if(isObject($class::combat)) {
 
 $class::combat = new scriptGroup() {
 	class = combat;
+    specialAttackTimeout = 7500;
 };
 
 
@@ -57,4 +58,33 @@ function combat::show_health(%this,%client) {
 function combat::show_weapon_bonus(%this,%client) {
 	%item = %client.inventory.getObject(%client.lastInventoryItemSelectedIndex).image;
 	$class::chat.c_print(%client,"<font:arial:22>\c4" @ %client.inventory.getObject(%client.lastInventoryItemSelectedIndex).rarity @ " \c5" @ %item @ "\n<font:arial:14>\c5" @ strReplace(%client.inventory.getObject(%client.lastInventoryItemSelectedIndex).stats.toString(),",","\n\c5"),12);
+}
+
+function combat::specials_isOk(%this, %client) {
+    return (getSimTime()-%client.lastSpecialAttackTime >= $class::combat.specialAttackTimeout);
+}
+
+function combat::specials_arrowRain(%this, %client) {
+    if(%this.specials_isOk(%client)) {
+        %range = 100;
+        %rc = $class::raycast.getCollidePoint(%client, %range);
+        if(getWordCount(%rc) >= 3) {
+            %pos = %rc;
+            %mi = %client.player.getMountedImage(0);
+            %pn = %mi.projectile;
+            $class::string.set(strLwr(%mi.projectile));
+            if($class::string.contains("bow")) {
+                for(%i=0;%i<10;%i++) {
+                    %p = new projectile() {
+                        dataBlock = fancybowprojectile;
+                        scale = "1 1 1";
+                        initialposition = vectorAdd(vectorAdd(%pos,"0 0 30"), getRandom(-3,3) SPC getRandom(-3,3) SPC getRandom(-3,7));
+                        initialVelocity = "0 0 -30";
+                        client = %client;
+                        sourceObject = %client.player;
+                    };
+                }
+            }
+        }
+    }
 }

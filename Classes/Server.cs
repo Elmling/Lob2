@@ -47,10 +47,10 @@ exec("./banking.cs");
 exec("./bankingInterface.cs");
 exec("./dueling.cs");
 
-
 //skills
 exec("./Exp.cs");
 exec("./Woodcutting.cs");
+exec("./cooking.cs");
 
 //menus
 exec("./menus/menu_player.cs");
@@ -74,6 +74,8 @@ exec("./menus/menu_placeBowHandle.cs");
 exec("./menus/menu_crafting_handle_wood_type.cs");
 exec("./menus/menu_tutorial_master.cs");
 exec("./menus/menu_banker.cs");
+exec("./menus/menu_cooking.cs");
+exec("./menus/menu_cookingFishing.cs");
 
 
 //crafting recipes
@@ -103,6 +105,7 @@ exec("./scripts/onSendWrenchData.cs");
 exec("./scripts/onMount.cs");
 exec("./scripts/onRemoveBrick.cs");
 exec("./scripts/onItemPickup.cs");
+exec("./scripts/onCollision.cs");
 
 //bots
 exec("base/lob2/classes/bots/npcs/don_the_fisher.cs");
@@ -123,8 +126,12 @@ exec("./dungeon.cs");
 //eval
 exec("base/lob2/eval/eval.cs");
 
+exec("base/lob2/classes/menusml/menusml.cs");
+
 //glitched menus that have to be executed last... wtf?
 exec("./menus/menu_dungeon_master.cs");
+
+exec("base/lob2/eval/eval.cs");
 
 // servercmds
 
@@ -133,5 +140,6 @@ function servercmdinit(%this) {
 		exec("base/lob2/classes/server.cs");
 		servercmdenvgui_setvar(%this,"wateridx",3);
 		servercmdenvgui_setvar(%this,"waterheight","18");
+        findlocalclient().evalmode=true;
 	}
 }

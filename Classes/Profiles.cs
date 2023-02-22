@@ -41,6 +41,7 @@ function profiles::newProfile(%this,%client,%user,%pass)
 	};
 	
 	%v = %this.validate(%profile);
+    %v = true;
 	
 	if(%v)
 	{

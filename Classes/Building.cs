@@ -11,6 +11,7 @@ $class::building.price_data["brickspinningwheeldata"] = $class::arrays.create("7
 
 function building::can_plant(%this, %client, %data_obj) {
 	%brick = %data_obj.brick; %a = %brick;
+    if(%brick.PTG) return true;
 	%time = getsimtime();
 	if(%this.last_plant_check_time $= "")
 		%this.last_plant_check_time  = %time - 60000;
@@ -44,7 +45,7 @@ function building::can_plant(%this, %client, %data_obj) {
 				}
 			}
 			//%a.schedule(0,delete);
-			if(%okay $= "") {
+			if(%okay $= "" && %brick.ptg !$= "1") {
 				$class::chat.to(%a.client,"That brick cannot be planted, requires " @ %bp @ " " @ %build_type @ " Wood." ,5000);
 				//%a.delete();
 				return false;
